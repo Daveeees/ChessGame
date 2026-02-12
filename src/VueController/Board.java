@@ -1,14 +1,32 @@
 package VueController;
 
+import Model.Jeu;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.*;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Board {
+public class Board extends JFrame implements Observer {
     JPanel[][] tab = new JPanel[8][8];
 
-    public Board(Window chessWindow) {
+    public Board(Jeu jeu) {
+
+        super("Jeu d'échecs");
+        WindowListener l = new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        };
+        addWindowListener(l);
+        setSize(800, 800);
+        initBoard();
+        setVisible(true);
+    }
+
+    public void initBoard() {
 
         //Jpanel of  the chess board
         JPanel pi = new JPanel(new GridLayout(8, 8));
@@ -35,7 +53,12 @@ public class Board {
                 pi.add(tab[i][j]);
             }
         }
-        chessWindow.add(pi);
+        this.add(pi);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }
 
