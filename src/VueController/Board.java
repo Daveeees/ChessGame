@@ -6,7 +6,7 @@ import java.awt.*;
 public class Board {
     JPanel[][] tab = new JPanel[8][8];
 
-    public Board(Window chessWindow){
+    public Board(Window chessWindow) {
 
         // JPanel of the whole Window
         JPanel jp = new JPanel();
@@ -20,14 +20,10 @@ public class Board {
             for (int j = 0; j < 8; j++) {
                 tab[i][j] = new JPanel();
 
-                if (i % 2 == 0) {
-                    if (j % 2 == 0) {
-                        tab[i][j].setBackground(Color.BLACK);
-                    }
+                if ((i + j) % 2 == 0) {
+                    tab[i][j].setBackground(Color.WHITE);
                 } else {
-                    if (j % 2 == 1) {
-                        tab[i][j].setBackground(Color.BLACK);
-                    }
+                    tab[i][j].setBackground(Color.BLACK);
                 }
 
                 pi.add(tab[i][j]);
