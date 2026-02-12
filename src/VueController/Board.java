@@ -16,14 +16,15 @@ public class Board {
         //Adding the board cases
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                JPanel square = new JPanel();
+                tab[i][j] = new JPanel();
 
                 if ((i + j) % 2 == 0) {
                     tab[i][j].setBackground(Color.WHITE);
                 } else {
                     tab[i][j].setBackground(Color.BLACK);
                 }
-                //Listener on each board case
+
+                JPanel square = tab[i][j];
                 square.addMouseListener(new MouseAdapter(){
                     public void mouseClicked(MouseEvent e){
                         square.setBackground(Color.RED);
