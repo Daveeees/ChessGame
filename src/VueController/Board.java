@@ -50,7 +50,7 @@ public class Board extends JFrame implements Observer {
                 JPanel square = tab[i][j];
                 square.addMouseListener(new MouseAdapter(){
                     public void mouseClicked(MouseEvent e){
-                        jeu.appliquerCoup(c);
+                        jeu.communiquerCoup(c);
                     }
                 });
 
