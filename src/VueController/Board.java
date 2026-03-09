@@ -46,11 +46,16 @@ public class Board extends JFrame implements Observer {
                 if ((i + j) % 2 == 0) {
                     tab[i][j].setBackground(Color.WHITE);
                 } else {
-                    tab[i][j].setBackground(Color.BLACK);
+                    tab[i][j].setBackground(Color.DARK_GRAY);
                 }
 
                 // création d'un label qui contiendra la pièce pour pour le panel
                 JLabel pieceCase = new JLabel();
+                if(jeu.getTypeCase(i,j) != null){
+                    ImageIcon icon = new ImageIcon(jeu.getTypeCase(i,j).getImage());
+                    pieceCase.setIcon(icon);
+                    System.out.println(jeu.getTypeCase(i,j).getImage());
+                }
 
                 Coup coup = new Coup(i,j);
 
@@ -84,7 +89,7 @@ public class Board extends JFrame implements Observer {
                         if ((i + j) % 2 == 0) {
                             tab[i][j].setBackground(Color.WHITE);
                         } else {
-                            tab[i][j].setBackground(Color.BLACK);
+                            tab[i][j].setBackground(Color.DARK_GRAY);
                         }
                     }
                 }
