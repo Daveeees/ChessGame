@@ -6,10 +6,12 @@ public class Tour extends Piece{
 
     private int ligne;
     private int colonne;
+    private String image;
 
-    public Tour(int ligne,int colonne) {
+    public Tour(int ligne,int colonne, String image) {
         this.ligne = ligne;
         this.colonne = colonne;
+        this.image = image;
     }
 
     @Override
