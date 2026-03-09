@@ -6,10 +6,12 @@ public class Fou extends Piece{
 
     private int ligne;
     private int colonne;
+    private String image;
 
-    public Fou(int ligne,int colonne) {
+    public Fou(int ligne,int colonne, String image) {
         this.ligne = ligne;
         this.colonne = colonne;
+        this.image = image;
     }
 
     @Override
