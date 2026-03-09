@@ -13,6 +13,9 @@ public class Reine extends Piece {
         this.image = image;
     }
 
+    public String getImage(){
+        return this.image;
+    }
     @Override
     public ArrayList<Case> getCasesAccessibles(int ligne, int colonne) {
         ArrayList<Case> casesAccessibles = new ArrayList<>();

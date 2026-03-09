@@ -51,8 +51,6 @@ public class Board extends JFrame implements Observer {
 
                 // création d'un label qui contiendra la pièce pour pour le panel
                 JLabel pieceCase = new JLabel();
-                jeu.
-                Case c = new Case(i,j);
 
                 Coup coup = new Coup(i,j);
 
@@ -97,7 +95,6 @@ public class Board extends JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
        refreshRouge();
-
     }
 }
 
