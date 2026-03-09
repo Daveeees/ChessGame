@@ -99,6 +99,10 @@ public class Jeu extends Observable{
         notifyObservers();
     }
 
+    public Piece getTypeCase(int ligne,int colonne){
+        return board[ligne][colonne].getPiece();
+    }
+
 
 }
 

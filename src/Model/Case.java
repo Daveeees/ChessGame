@@ -24,4 +24,8 @@ public class Case {
     public void setColonne(int colonne) {
         this.colonne = colonne;
     }
+
+    public Piece getPiece(){
+        return piece;
+    }
 }

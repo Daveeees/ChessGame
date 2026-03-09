@@ -31,6 +31,8 @@ public class Board extends JFrame implements Observer {
     }
 
     public void initBoard() {
+        // init board model
+        jeu.initBoardModel();
 
         //Jpanel of  the chess board
         JPanel pi = new JPanel(new GridLayout(8, 8));
@@ -49,6 +51,7 @@ public class Board extends JFrame implements Observer {
 
                 // création d'un label qui contiendra la pièce pour pour le panel
                 JLabel pieceCase = new JLabel();
+                jeu.
                 Case c = new Case(i,j);
 
                 Coup coup = new Coup(i,j);
@@ -69,9 +72,7 @@ public class Board extends JFrame implements Observer {
         this.add(pi);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
+    public void refreshRouge(){
         int colSelect = jeu.getColonneChoisie();
         int ligneSelect = jeu.getLigneChoisie();
 
@@ -91,6 +92,12 @@ public class Board extends JFrame implements Observer {
                 }
             }
         }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+       refreshRouge();
+
     }
 }
 
