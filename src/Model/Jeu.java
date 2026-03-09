@@ -27,7 +27,7 @@ public class Jeu extends Observable{
         return colonneChoisie;
     }
 
-    public void initBoard(){
+    public void initBoardModel(){
         for(int i=0;i<=8;i++){
             for(int j=0;j<=8;j++){
                 if(i == 1){
@@ -94,7 +94,11 @@ public class Jeu extends Observable{
                 }
             }
         }
+
+        setChanged();
+        notifyObservers();
     }
+
 
 }
 
