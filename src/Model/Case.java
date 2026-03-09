@@ -3,12 +3,12 @@ package Model;
 public class Case {
     private int ligne;
     private int colonne;
-    private String type;
+    private Piece piece;
 
-    public Case(int ligne, int colonne, String type){
+    public Case(int ligne, int colonne, Piece piece){
         this.ligne = ligne;
         this.colonne = colonne;
-        this.type = type;
+        this.piece = piece;
     }
 
     public int getLigne() {
