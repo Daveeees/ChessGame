@@ -3,5 +3,15 @@ package Model;
 import java.util.ArrayList;
 
 public abstract class Piece {
+    private int ligne;
+    private int colonne;
+    private String image;
+
+    public Piece(int ligne, int colonne, String image) {
+        this.ligne = ligne;
+        this.colonne = colonne;
+        this.image = image;
+    }
+
     public abstract ArrayList<Case> getCasesAccessibles(int ligne, int colonne);
 }

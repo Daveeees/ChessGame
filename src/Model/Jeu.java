@@ -27,6 +27,61 @@ public class Jeu extends Observable{
         return colonneChoisie;
     }
 
+    public void initBoard(){
+        for(int i=0;i<=8;i++){
+            for(int j=0;j<=8;j++){
+                if(i == 1){
+                    board[i][j] = new Case(i,j,"");
+                }
+                // autre pieces
+                else if(c.getLigne() == 0){
+                    if(c.getColonne() == 0 || c.getColonne() == 7){
+                        piece = "tour noire";
+                    }
+                    else if(c.getColonne() == 1 || c.getColonne() == 6){
+                        piece = "cavalier noir";
+                    }
+                    else if(c.getColonne() == 2 || c.getColonne() == 5){
+                        piece = "fou noir";
+                    }
+                    else if(c.getColonne() == 3){
+                        piece = "reine noire";
+                    }
+                    else if(c.getColonne() == 4){
+                        piece = "roi noir";
+                    }
+                }
+
+                // blancs
+                // pions
+                else if(c.getLigne() == 6){
+                    piece = "pion blanc";
+                }
+                // autres pieces
+                else if (c.getLigne() == 7){
+                    if(c.getColonne() == 0 || c.getColonne() == 7){
+                        piece = "tour blanche";
+                    }
+                    else if(c.getColonne() == 1 || c.getColonne() == 6){
+                        piece = "cavalier blanc";
+                    }
+                    else if(c.getColonne() == 2 || c.getColonne() == 5){
+                        piece = "fou blanc";
+                    }
+                    else if(c.getColonne() == 3){
+                        piece = "reine blanche";
+                    }
+                    else if(c.getColonne() == 4){
+                        piece = "roi blanc";
+                    }
+                }
+                else{
+                    piece = "vide";
+                }
+            }
+        }
+    }
+
     public void initPiece(Case c){
 
         // noirs
