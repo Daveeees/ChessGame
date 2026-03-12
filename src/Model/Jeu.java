@@ -10,6 +10,8 @@ public class Jeu extends Observable{
     private int colonneChoisie;
     private Piece piece;
     private Case[][] board = new Case[8][8];
+    private Joueur joueurBlanc = new Joueur("Blanc");
+    private Joueur joueurNoir = new Joueur("Noir");
 
     public void communiquerCoup(Coup c){
         ligneChoise = c.getLigne();
