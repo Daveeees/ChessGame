@@ -1,5 +1,6 @@
 package VueController;
 
+import Model.Case;
 import Model.Jeu;
 import Model.Coup;
 
@@ -30,6 +31,8 @@ public class Board extends JFrame implements Observer {
     }
 
     public void initBoard() {
+        // init board model
+        jeu.initBoardModel();
 
         //Jpanel of  the chess board
         JPanel pi = new JPanel(new GridLayout(8, 8));
@@ -37,33 +40,42 @@ public class Board extends JFrame implements Observer {
         //Adding the board cases
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                tab[i][j] = new JPanel();
 
+                // création de la case et sa couleur
+                tab[i][j] = new JPanel();
                 if ((i + j) % 2 == 0) {
                     tab[i][j].setBackground(Color.WHITE);
                 } else {
-                    tab[i][j].setBackground(Color.BLACK);
+                    tab[i][j].setBackground(Color.DARK_GRAY);
                 }
 
-                Coup c = new Coup(i,j);
+                // création d'un label qui contiendra la pièce pour pour le panel
+                JLabel pieceCase = new JLabel();
+                if(jeu.getTypeCase(i,j) != null){
+                    ImageIcon icon = new ImageIcon(jeu.getTypeCase(i,j).getImage());
+                    pieceCase.setIcon(icon);
+                    System.out.println(jeu.getTypeCase(i,j).getImage());
+                }
+
+                Coup coup = new Coup(i,j);
 
                 JPanel square = tab[i][j];
                 square.addMouseListener(new MouseAdapter(){
                     public void mouseClicked(MouseEvent e){
-                        jeu.communiquerCoup(c);
+                        jeu.communiquerCoup(coup);
                     }
                 });
 
+
                 tab[i][j] = square;
+                tab[i][j].add(pieceCase);
                 pi.add(tab[i][j]);
             }
         }
         this.add(pi);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
+    public void refreshRouge(){
         int colSelect = jeu.getColonneChoisie();
         int ligneSelect = jeu.getLigneChoisie();
 
@@ -77,12 +89,17 @@ public class Board extends JFrame implements Observer {
                         if ((i + j) % 2 == 0) {
                             tab[i][j].setBackground(Color.WHITE);
                         } else {
-                            tab[i][j].setBackground(Color.BLACK);
+                            tab[i][j].setBackground(Color.DARK_GRAY);
                         }
                     }
                 }
             }
         }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+       refreshRouge();
     }
 }
 
