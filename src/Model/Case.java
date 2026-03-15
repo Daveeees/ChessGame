@@ -28,4 +28,8 @@ public class Case {
     public Piece getPiece(){
         return piece;
     }
+
+    public void setPiece(Piece piece){
+        this.piece = piece;
+    }
 }

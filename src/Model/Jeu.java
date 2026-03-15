@@ -4,29 +4,51 @@ import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Jeu extends Observable{
+public class Jeu extends Observable implements Runnable{
 
     private int ligneChoise;
     private int colonneChoisie;
     private Piece piece;
     private Case[][] board = new Case[8][8];
-    private Joueur joueurBlanc = new Joueur("Blanc");
-    private Joueur joueurNoir = new Joueur("Noir");
+    private Joueur joueurEnCours = new Joueur("Blanc",this);
+    private Joueur joueurBlanc = new Joueur("Blanc",this);
+    private Joueur joueurNoir = new Joueur("Noir",this);
+    private Boolean partieTerminee = false;
+    private Coup nextC;
+    private Point pointSelectionne = null;
 
-    public void communiquerCoup(Coup c){
-        ligneChoise = c.getLigne();
-        colonneChoisie = c.getColonne();
 
-        setChanged();
-        notifyObservers();
+    public Joueur joueurSuivant(){
+        if(joueurEnCours.getCouleur().equals("Blanc")){
+            joueurEnCours = joueurBlanc;
+        }
+        else{
+            joueurEnCours = joueurNoir;
+        }
+        return joueurEnCours;
     }
 
-    public int getLigneChoisie() {
-        return ligneChoise;
+    // Fonction servant à créer un coup
+    // Si pas de case déjà enregistree: enregistrer cette case (elle servira de point de départ)
+    // Si une case déjà enregistrée: créer un coup avec la case choisie en tant que point d'arrivee
+    // et la case déjà présente en tant que point de départ
+    public void gererPointSelectionne(Point p){
+        if (board[p.getX()][p.getY()].getPiece() != null || pointSelectionne != null){
+            if(pointSelectionne == null){
+                pointSelectionne = p;
+            }
+            else{
+                Coup c = new Coup(pointSelectionne,p);
+                setCoup(c);
+                pointSelectionne = null;
+            }
+            setChanged();
+            notifyObservers();
+        }
     }
 
-    public int getColonneChoisie() {
-        return colonneChoisie;
+    public Point getPointSelectionne(){
+        return pointSelectionne;
     }
 
     public void initBoardModel(){
@@ -96,14 +118,49 @@ public class Jeu extends Observable{
                 }
             }
         }
-
-        setChanged();
-        notifyObservers();
     }
 
     public Piece getTypeCase(int ligne,int colonne){
         return board[ligne][colonne].getPiece();
     }
+
+    public Coup getNextCoup(){
+        return nextC;
+    }
+
+    public void setCoup(Coup c){
+        synchronized (this) {
+         nextC = c;
+         this.notify();
+        }
+    }
+    public void appliquerCoup(Coup c){
+        Case caseDepart = board[c.getDepart().getX()][c.getDepart().getY()];
+        Case caseArrivee = board[c.getArrivee().getX()][c.getArrivee().getY()];
+        if(caseDepart.getPiece() != null){
+            Piece pieceABouger = caseDepart.getPiece();
+            caseDepart.setPiece(null);
+            caseArrivee.setPiece(pieceABouger);
+        }
+        setChanged();
+        notifyObservers();
+    }
+    public void jouerPartie() throws InterruptedException {
+
+        while(!partieTerminee){
+            Joueur js = joueurSuivant();
+            Coup c = js.getCoup();
+            appliquerCoup(c);
+        }
+    }
+    public void run(){
+        try {
+            jouerPartie();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 }

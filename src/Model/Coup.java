@@ -2,19 +2,19 @@ package Model;
 
 public class Coup {
 
-    private int ligne;
-    private int colonne;
+    private Point depart;
+    private Point arrivee;
 
-    public Coup(int ligne, int colonne) {
-        this.ligne = ligne;
-        this.colonne = colonne;
+    public Coup(Point depart,Point arrivee) {
+        this.depart = depart;
+        this.arrivee = arrivee;
     }
 
-    public int getLigne() {
-        return ligne;
+    public Point getDepart() {
+        return depart;
+    }
+    public Point getArrivee(){
+        return arrivee;
     }
 
-    public int getColonne() {
-        return colonne;
-    }
 }

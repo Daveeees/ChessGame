@@ -3,6 +3,7 @@ package VueController;
 import Model.Case;
 import Model.Jeu;
 import Model.Coup;
+import Model.Point;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ import java.util.Observer;
 
 public class Board extends JFrame implements Observer {
     JPanel[][] tab = new JPanel[8][8];
-    private Jeu jeu;
+    final private Jeu jeu;
 
     public Board(Jeu jeu) {
 
@@ -31,8 +32,6 @@ public class Board extends JFrame implements Observer {
     }
 
     public void initBoard() {
-        // init board model
-        jeu.initBoardModel();
 
         //Jpanel of  the chess board
         JPanel pi = new JPanel(new GridLayout(8, 8));
@@ -54,15 +53,15 @@ public class Board extends JFrame implements Observer {
                 if(jeu.getTypeCase(i,j) != null){
                     ImageIcon icon = new ImageIcon(jeu.getTypeCase(i,j).getImage());
                     pieceCase.setIcon(icon);
-                    System.out.println(jeu.getTypeCase(i,j).getImage());
+                    //System.out.println(jeu.getTypeCase(i,j).getImage());
                 }
 
-                Coup coup = new Coup(i,j);
+                Point p = new Point(i,j);
 
                 JPanel square = tab[i][j];
                 square.addMouseListener(new MouseAdapter(){
                     public void mouseClicked(MouseEvent e){
-                        jeu.communiquerCoup(coup);
+                        jeu.gererPointSelectionne(p);
                     }
                 });
 
@@ -76,8 +75,10 @@ public class Board extends JFrame implements Observer {
     }
 
     public void refreshRouge(){
-        int colSelect = jeu.getColonneChoisie();
-        int ligneSelect = jeu.getLigneChoisie();
+        int colSelect = jeu.getPointSelectionne().getY();
+        int ligneSelect = jeu.getPointSelectionne().getX();
+        // System.out.print(colSelect);
+        // System.out.print(ligneSelect);
 
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
@@ -97,9 +98,39 @@ public class Board extends JFrame implements Observer {
         }
     }
 
+    public void refreshBoard(){
+        for(int i=0; i<8; i++){
+            for(int j=0; j<8;j++){
+                if (tab[i][j].getBackground() == Color.RED) {
+                    if ((i + j) % 2 == 0) {
+                        tab[i][j].setBackground(Color.WHITE);
+                    } else {
+                        tab[i][j].setBackground(Color.DARK_GRAY);
+                    }
+                }
+                tab[i][j].removeAll();
+                JLabel pieceCase = new JLabel();
+                if(jeu.getTypeCase(i,j) != null){
+                    ImageIcon icon = new ImageIcon(jeu.getTypeCase(i,j).getImage());
+                    pieceCase.setIcon(icon);
+                    //System.out.println(jeu.getTypeCase(i,j).getImage());
+                }
+                tab[i][j].add(pieceCase);
+
+                tab[i][j].revalidate();
+                tab[i][j].repaint();
+            }
+        }
+    }
+
     @Override
     public void update(Observable o, Object arg) {
-       refreshRouge();
+        if(jeu.getPointSelectionne() != null){
+            refreshRouge();
+        }
+        else{
+            refreshBoard();
+        }
     }
 }
 
