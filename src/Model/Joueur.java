@@ -34,7 +34,7 @@ public class Joueur {
 
     public Coup getCoup() throws InterruptedException {
         synchronized (jeu){
-            while (jeu.getNextCoup() == null || !coupValide(jeu.getNextCoup())) {
+            while (jeu.getNextCoup() == null || !coupValide(jeu.getNextCoup()) || jeu.getNextCoup().getDepart().equals(jeu.getNextCoup().getArrivee())) {
                 jeu.wait();
             }
 
