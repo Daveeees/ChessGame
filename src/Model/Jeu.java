@@ -68,7 +68,7 @@ public class Jeu extends Observable implements Runnable{
                         board[i][j] = new Case(i,j, tN);
                     }
                     else if(j == 1 || j == 6){
-                        Cavalier cN = new Cavalier(i,j, "chessPieces/bN.png", joueurNoir, new SautCheval(null));
+                        Cavalier cN = new Cavalier(i,j, "chessPieces/bN.png", joueurNoir);
                         joueurNoir.ajouterPiece(cN);
                         board[i][j] = new Case(i,j, cN);
                     }
@@ -104,12 +104,12 @@ public class Jeu extends Observable implements Runnable{
                         board[i][j] = new Case(i,j, tB);
                     }
                     else if(j == 1 || j == 6){
-                        Cavalier cB = new Cavalier(i,j, "chessPieces/wN.png", joueurBlanc,new SautCheval(null));
+                        Cavalier cB = new Cavalier(i,j, "chessPieces/wN.png", joueurBlanc);
                         joueurBlanc.ajouterPiece(cB);
                         board[i][j] = new Case(i,j, cB);
                     }
                     else if(j == 2 || j == 5){
-                        Fou fB = new Fou(i,j, "chessPieces/wB.png", joueurBlanc);
+                        Fou fB = new Fou(i,j, "chessPieces/wB.png",joueurBlanc);
                         joueurBlanc.ajouterPiece(fB);
                         board[i][j] = new Case(i,j,fB);
                     }
