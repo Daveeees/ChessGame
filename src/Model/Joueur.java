@@ -28,13 +28,17 @@ public class Joueur {
         couleur = col;
     }
 
-    public Boolean coupValide(Coup c){
-        return jeu.getTypeCase(c.getDepart().getX(),c.getDepart().getY()).getJoueur().equals(this);
+    public Boolean coupValide(Coup c, Case[][] board){
+        Case caseDepart = board[c.getDepart().getX()][c.getDepart().getY()];
+        Case caseArrivee = board[c.getArrivee().getX()][c.getArrivee().getY()];
+        ArrayList<Case> casesPossibles = null;
+        casesPossibles = caseDepart.getPiece().getCasesAccessibles(c.getDepart().getX(), c.getDepart().getY(), board);
+        return jeu.getTypeCase(c.getDepart().getX(),c.getDepart().getY()).getJoueur().equals(this) && casesPossibles != null && casesPossibles.contains(caseArrivee);
     }
 
     public Coup getCoup() throws InterruptedException {
         synchronized (jeu){
-            while (jeu.getNextCoup() == null || !coupValide(jeu.getNextCoup()) || jeu.getNextCoup().getDepart().equals(jeu.getNextCoup().getArrivee())) {
+            while (jeu.getNextCoup() == null || !coupValide(jeu.getNextCoup(), jeu.getBoard()) || jeu.getNextCoup().getDepart().equals(jeu.getNextCoup().getArrivee())) {
                 jeu.wait();
             }
 

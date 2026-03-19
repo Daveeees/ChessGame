@@ -1,6 +1,7 @@
 package Model;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -67,7 +68,7 @@ public class Jeu extends Observable implements Runnable{
                         board[i][j] = new Case(i,j, tN);
                     }
                     else if(j == 1 || j == 6){
-                        Cavalier cN = new Cavalier(i,j, "chessPieces/bN.png", joueurNoir);
+                        Cavalier cN = new Cavalier(i,j, "chessPieces/bN.png", joueurNoir, new SautCheval(null));
                         joueurNoir.ajouterPiece(cN);
                         board[i][j] = new Case(i,j, cN);
                     }
@@ -103,7 +104,7 @@ public class Jeu extends Observable implements Runnable{
                         board[i][j] = new Case(i,j, tB);
                     }
                     else if(j == 1 || j == 6){
-                        Cavalier cB = new Cavalier(i,j, "chessPieces/wN.png", joueurBlanc);
+                        Cavalier cB = new Cavalier(i,j, "chessPieces/wN.png", joueurBlanc,new SautCheval(null));
                         joueurBlanc.ajouterPiece(cB);
                         board[i][j] = new Case(i,j, cB);
                     }
@@ -160,6 +161,10 @@ public class Jeu extends Observable implements Runnable{
 
     public void resetNextC(){
         nextC = null;
+    }
+
+    public Case[][] getBoard(){
+        return board;
     }
 
     public void jouerPartie() throws InterruptedException {

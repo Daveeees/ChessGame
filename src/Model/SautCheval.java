@@ -7,7 +7,7 @@ public class SautCheval extends DCA {
     private static final int[][] SAUTS = {
             {-2, -1}, {-2,  1},
             {-1, -2}, {-1,  2},
-            { 1, -2}, { 1,  2},
+            { 1, -2}, {1,  2},
             { 2, -1}, { 2,  1}
     };
 
