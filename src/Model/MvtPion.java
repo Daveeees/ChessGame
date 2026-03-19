@@ -31,21 +31,21 @@ public class MvtPion extends DCA {
             int l = ligne + Direction.HAUT.dx;
             int c = colonne + Direction.HAUT.dy;
 
-            if (board[l][c].getPiece() != null) {
+            if (estDansLePlateau(l,c) && board[l][c].getPiece() == null) {
                 cases.add(board[l][c]);
-                if(ligne == 6 && board[ligne - 1][c].getPiece() != null) {
-                    cases.add(board[ligne - 1][c]);
+                if(ligne == 6 && board[l - 1][c].getPiece() == null) {
+                    cases.add(board[l - 1][c]);
                 }
             }
 
             l = ligne + Direction.HAUT_DROITE.dx;
             c = colonne + Direction.HAUT_DROITE.dy;
-            if (!board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())) {
+            if (estDansLePlateau(l,c) && board[l][c].getPiece() != null && !board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())) {
                 cases.add(board[l][c]);
             }
             l = ligne + Direction.HAUT_GAUCHE.dx;
             c = colonne + Direction.HAUT_GAUCHE.dy;
-            if(board[l][c] != null && !board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())){
+            if( estDansLePlateau(l,c) && board[l][c].getPiece() != null && !board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())){
                 cases.add(board[l][c]);
             }
         }
@@ -53,21 +53,21 @@ public class MvtPion extends DCA {
             int l = ligne + Direction.BAS.dx;
             int c = colonne + Direction.BAS.dy;
 
-            if (board[l][c].getPiece() != null) {
+            if (estDansLePlateau(l,c) && board[l][c].getPiece() == null) {
                 cases.add(board[l][c]);
-                if(ligne == 1 && board[ligne + 1][c].getPiece() != null) {
-                    cases.add(board[ligne + 1][c]);
+                if(ligne == 1 && board[l + 1][c].getPiece() == null) {
+                    cases.add(board[l + 1][c]);
                 }
             }
 
             l = ligne + Direction.BAS_DROITE.dx;
             c = colonne + Direction.BAS_DROITE.dy;
-            if (!board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())) {
+            if (estDansLePlateau(l,c) && board[l][c].getPiece() != null && !board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())) {
                 cases.add(board[l][c]);
             }
             l = ligne + Direction.BAS_GAUCHE.dx;
             c = colonne + Direction.BAS_GAUCHE.dy;
-            if(board[l][c] != null && !board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())){
+            if(estDansLePlateau(l,c) && board[l][c].getPiece() != null && !board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())){
                 cases.add(board[l][c]);
             }
         }
