@@ -45,7 +45,7 @@ public class MvtPion extends DCA {
             }
             l = ligne + Direction.HAUT_GAUCHE.dx;
             c = colonne + Direction.HAUT_GAUCHE.dy;
-            if(!board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())){
+            if(board[l][c] != null && !board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())){
                 cases.add(board[l][c]);
             }
         }
@@ -67,7 +67,7 @@ public class MvtPion extends DCA {
             }
             l = ligne + Direction.BAS_GAUCHE.dx;
             c = colonne + Direction.BAS_GAUCHE.dy;
-            if(!board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())){
+            if(board[l][c] != null && !board[l][c].getPiece().getJoueur().getCouleur().equals(joueur.getCouleur())){
                 cases.add(board[l][c]);
             }
         }
