@@ -155,6 +155,29 @@ public class Board extends JFrame implements Observer {
         }
     }
 
+    public void showAllCasesPossibles(){
+        int colSelect = jeu.getPointSelectionne().getY();
+        int ligneSelect = jeu.getPointSelectionne().getX();
+        tab[colSelect][ligneSelect].setBackground(Color.RED);
+        for (Case c:jeu.getCasesPossiblesCoup()){
+            int colonne = c.getColonne();
+            int ligne = c.getLigne();
+
+            tab[ligne][colonne].removeAll();
+            JLabel pieceCase = new JLabel();
+            if(jeu.getTypeCase(ligne,colonne) != null){
+                String cheminImage = getCheminImage(jeu.getBoard()[ligne][colonne], ligne);
+                ImageIcon icon = new ImageIcon(cheminImage);
+                pieceCase.setIcon(icon);
+                //System.out.println(jeu.getTypeCase(i,j).getImage());
+            }
+            tab[ligne][colonne].add(pieceCase);
+            tab[ligne][colonne].setBackground(Color.YELLOW);
+            tab[ligne][colonne].revalidate();
+            tab[ligne][colonne].repaint();
+        }
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         if(jeu.getPointSelectionne() != null){

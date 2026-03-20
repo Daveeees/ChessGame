@@ -17,7 +17,18 @@ public class Jeu extends Observable implements Runnable {
     private Boolean partieTerminee = false;
     private Coup nextC;
     private Point pointSelectionne = null;
+    private ArrayList<Case> casesPossiblesCoup = new ArrayList();
 
+
+    public void setCasesPossiblesCoup(){
+        casesPossiblesCoup = joueurEnCours.getCasesPossibles();
+        setChanged();
+        notifyObservers();
+    }
+
+    public ArrayList<Case> getCasesPossiblesCoup(){
+        return casesPossiblesCoup;
+    }
 
     public Joueur joueurSuivant(){
         if(joueurEnCours.getCouleur().equals("Blanc")){
@@ -46,6 +57,7 @@ public class Jeu extends Observable implements Runnable {
         if (board[p.getX()][p.getY()].getPiece() != null || pointSelectionne != null){
             if(pointSelectionne == null){
                 pointSelectionne = p;
+                setCasesPossiblesCoup();
             }
             else{
                 Coup c = new Coup(pointSelectionne,p,joueurEnCours);
@@ -190,6 +202,16 @@ public class Jeu extends Observable implements Runnable {
         return board;
     }
 
+    public void appliquerCoupFictif(Coup c){
+        Case caseDepart = board[c.getDepart().getX()][c.getDepart().getY()];
+        Case caseArrivee = board[c.getArrivee().getX()][c.getArrivee().getY()];
+        if(caseDepart.getPiece() != null){
+            Piece pieceABouger = caseDepart.getPiece();
+            caseDepart.setPiece(null);
+            caseArrivee.setPiece(pieceABouger);
+        }
+    }
+
     public Boolean echec (Joueur joueur){
         Joueur adversaire =  getJoueurSuivant();
         Case caseRoiJoueur = joueur.getCaseRoi();
@@ -199,9 +221,29 @@ public class Jeu extends Observable implements Runnable {
     }
 
     public boolean coupValide(Coup c){
-        Jeu jeu = this.clone();
-        jeu.appliquerCoup(c);
-        return !jeu.echec(c.getJoueur());
+
+        boolean coupEstValide = false;
+        Piece pieceDepart = null;
+        Piece pieceArrivee = null;
+        if(board[c.getDepart().getX()][c.getDepart().getY()].getPiece() != null){
+            pieceDepart = board[c.getDepart().getX()][c.getDepart().getY()].getPiece().clone();
+        }
+        if(board[c.getArrivee().getX()][c.getArrivee().getY()].getPiece() != null) {
+            pieceArrivee = board[c.getArrivee().getX()][c.getArrivee().getY()].getPiece().clone();
+        }
+
+        Case caseDepart = board[c.getDepart().getX()][c.getDepart().getY()];
+        Case caseArrivee = board[c.getArrivee().getX()][c.getArrivee().getY()];
+
+        appliquerCoupFictif(c);
+        if(!echec(c.getJoueur())){
+            coupEstValide = true;
+        }
+
+        caseDepart.setPiece(pieceDepart);
+        caseArrivee.setPiece(pieceArrivee);
+
+        return coupEstValide;
 
     }
 

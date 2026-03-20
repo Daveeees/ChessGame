@@ -4,7 +4,7 @@ import Model.Mouvements.DCA;
 
 import java.util.ArrayList;
 
-public abstract class Piece {
+public abstract class Piece implements Cloneable{
     protected int ligne;
     protected int colonne;
     protected Joueur joueur;
@@ -33,5 +33,15 @@ public abstract class Piece {
         ArrayList<Case> casesAccessibles;
         casesAccessibles = dca.getCasesAccessibles(ligne, colonne, board, joueur);
         return casesAccessibles;
+    }
+
+    @Override
+    public Piece clone() {
+        try {
+            Piece clone = (Piece) super.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
