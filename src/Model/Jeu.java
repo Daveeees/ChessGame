@@ -56,34 +56,34 @@ public class Jeu extends Observable implements Runnable{
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
                 if(i == 1){
-                    Pion pN = new Pion(i,j,"chessPieces/bP.png", joueurNoir);
+                    Pion pN = new Pion(i,j, joueurNoir);
                     joueurNoir.ajouterPiece(pN);
                     board[i][j] = new Case(i,j, pN);
                 }
                 // autre pieces
                 else if(i == 0){
                     if(j == 0 || j == 7){
-                        Tour tN = new Tour(i,j, "chessPieces/bR.png", joueurNoir);
+                        Tour tN = new Tour(i,j, joueurNoir);
                         joueurNoir.ajouterPiece(tN);
                         board[i][j] = new Case(i,j, tN);
                     }
                     else if(j == 1 || j == 6){
-                        Cavalier cN = new Cavalier(i,j, "chessPieces/bN.png", joueurNoir);
+                        Cavalier cN = new Cavalier(i,j, joueurNoir);
                         joueurNoir.ajouterPiece(cN);
                         board[i][j] = new Case(i,j, cN);
                     }
                     else if(j == 2 || j == 5){
-                        Fou fN = new Fou(i,j, "chessPieces/bB.png", joueurNoir);
+                        Fou fN = new Fou(i,j, joueurNoir);
                         joueurNoir.ajouterPiece(fN);
                         board[i][j] = new Case(i,j,fN);
                     }
                     else if(j == 3){
-                        Reine reineN = new Reine(i,j, "chessPieces/bQ.png", joueurNoir);
+                        Reine reineN = new Reine(i,j, joueurNoir);
                         joueurNoir.ajouterPiece(reineN);
                         board[i][j] = new Case(i,j,reineN);
                     }
                     else if(j == 4){
-                        Roi roiN = new Roi(i,j, "chessPieces/bK.png", joueurNoir);
+                        Roi roiN = new Roi(i,j, joueurNoir);
                         joueurNoir.ajouterPiece(roiN);
                         board[i][j] = new Case(i,j,roiN);
                     }
@@ -92,34 +92,34 @@ public class Jeu extends Observable implements Runnable{
                 // blancs
                 // pions
                 else if(i == 6){
-                    Pion pB = new Pion(i,j,"chessPieces/wP.png", joueurBlanc);
+                    Pion pB = new Pion(i,j, joueurBlanc);
                     joueurBlanc.ajouterPiece(pB);
                     board[i][j] = new Case(i,j, pB);
                 }
                 // autres pieces
                 else if (i == 7){
                     if(j == 0 || j == 7){
-                        Tour tB = new Tour(i,j, "chessPieces/wR.png", joueurBlanc);
+                        Tour tB = new Tour(i,j, joueurBlanc);
                         joueurBlanc.ajouterPiece(tB);
                         board[i][j] = new Case(i,j, tB);
                     }
                     else if(j == 1 || j == 6){
-                        Cavalier cB = new Cavalier(i,j, "chessPieces/wN.png", joueurBlanc);
+                        Cavalier cB = new Cavalier(i,j, joueurBlanc);
                         joueurBlanc.ajouterPiece(cB);
                         board[i][j] = new Case(i,j, cB);
                     }
                     else if(j == 2 || j == 5){
-                        Fou fB = new Fou(i,j, "chessPieces/wB.png",joueurBlanc);
+                        Fou fB = new Fou(i,j,joueurBlanc);
                         joueurBlanc.ajouterPiece(fB);
                         board[i][j] = new Case(i,j,fB);
                     }
                     else if(j == 3){
-                        Reine reineB = new Reine(i,j, "chessPieces/wQ.png", joueurBlanc);
+                        Reine reineB = new Reine(i,j, joueurBlanc);
                         joueurBlanc.ajouterPiece(reineB);
                         board[i][j] = new Case(i,j,reineB);
                     }
                     else if(j == 4){
-                        Roi roiB = new Roi(i,j, "chessPieces/wK.png", joueurBlanc);
+                        Roi roiB = new Roi(i,j, joueurBlanc);
                         joueurBlanc.ajouterPiece(roiB);
                         board[i][j] = new Case(i,j,roiB);
                     }
