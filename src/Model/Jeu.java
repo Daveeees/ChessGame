@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Jeu extends Observable implements Runnable{
+public class Jeu extends Observable implements Runnable {
 
     private int ligneChoise;
     private int colonneChoisie;
@@ -29,6 +29,15 @@ public class Jeu extends Observable implements Runnable{
         return joueurEnCours;
     }
 
+    public Joueur getJoueurSuivant(){
+        if(joueurEnCours.getCouleur().equals("Blanc")){
+            return joueurNoir;
+        }
+        else{
+            return joueurBlanc;
+        }
+    }
+
     // Fonction servant à créer un coup
     // Si pas de case déjà enregistree: enregistrer cette case (elle servira de point de départ)
     // Si une case déjà enregistrée: créer un coup avec la case choisie en tant que point d'arrivee
@@ -39,7 +48,7 @@ public class Jeu extends Observable implements Runnable{
                 pointSelectionne = p;
             }
             else{
-                Coup c = new Coup(pointSelectionne,p);
+                Coup c = new Coup(pointSelectionne,p,joueurEnCours);
                 setCoup(c);
                 pointSelectionne = null;
             }
@@ -153,10 +162,24 @@ public class Jeu extends Observable implements Runnable{
         if(caseDepart.getPiece() != null){
             Piece pieceABouger = caseDepart.getPiece();
             caseDepart.setPiece(null);
+
+            if(caseArrivee.getPiece() != null){
+                Piece pieceCaseArrivee = caseArrivee.getPiece();
+                for (Piece p: getJoueurSuivant().getPieces()){
+                    if(p.equals(pieceCaseArrivee)){
+                        getJoueurSuivant().getPieces().remove(p);
+                    }
+                }
+            }
+
             caseArrivee.setPiece(pieceABouger);
         }
         setChanged();
         notifyObservers();
+    }
+
+    public void annulerCoup(Coup c){
+
     }
 
     public void resetNextC(){
@@ -167,10 +190,28 @@ public class Jeu extends Observable implements Runnable{
         return board;
     }
 
+    public Boolean echec (Joueur joueur){
+        Joueur adversaire =  getJoueurSuivant();
+        Case caseRoiJoueur = joueur.getCaseRoi();
+        ArrayList<Case> casesPossibles = adversaire.getCasesPossibles();
+
+        return casesPossibles.contains(caseRoiJoueur);
+    }
+
+    public boolean coupValide(Coup c){
+        Jeu jeu = this.clone();
+        jeu.appliquerCoup(c);
+        return !jeu.echec(c.getJoueur());
+
+    }
+
     public void jouerPartie() throws InterruptedException {
 
         while(!partieTerminee){
             Coup c = joueurEnCours.getCoup();
+            while(!coupValide(c)){
+                c = joueurEnCours.getCoup();
+            }
             appliquerCoup(c);
             joueurSuivant();
 

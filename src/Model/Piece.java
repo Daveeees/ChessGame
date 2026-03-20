@@ -17,6 +17,14 @@ public abstract class Piece {
         this.dca = dca;
     }
 
+    public int getLigne(){
+        return ligne;
+    }
+
+    public  int getColonne(){
+        return colonne;
+    }
+
     public Joueur getJoueur(){
         return joueur;
     }

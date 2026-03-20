@@ -1,15 +1,17 @@
 package Model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Joueur {
     private String couleur;
     private final Jeu jeu;
-    private ArrayList<Piece> pieces = new ArrayList<Piece>();
+    private ArrayList<Piece> pieces;
 
     public Joueur(String couleur, Jeu jeu) {
         this.couleur = couleur;
         this.jeu = jeu;
+        this.pieces = new ArrayList<>();
     }
 
     public void ajouterPiece(Piece p){
@@ -48,4 +50,28 @@ public class Joueur {
         }
     }
 
+    public ArrayList<Piece> getPieces(){
+        return pieces;
+    }
+
+    public ArrayList<Case> getCasesPossibles (){
+        ArrayList<Piece> pieces = getPieces();
+        ArrayList<Case> casesPossibles = new ArrayList<>();
+
+        for(Piece p : pieces){
+            casesPossibles.addAll(p.getCasesAccessibles(p.getLigne(),p.getColonne(), jeu.getBoard()));
+        }
+
+        return casesPossibles;
+    }
+
+    public Case getCaseRoi(){
+        Case caseRoi = null;
+        for(Piece p: getPieces()){
+            if (p instanceof Roi){
+                caseRoi = jeu.getBoard()[p.getLigne()][p.getColonne()];
+            }
+        }
+        return caseRoi;
+    }
 }
