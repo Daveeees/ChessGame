@@ -1,6 +1,6 @@
 package Model;
 
-import java.util.ArrayList;
+import Model.Mouvements.MvtPion;
 
 public class Pion extends Piece {
 

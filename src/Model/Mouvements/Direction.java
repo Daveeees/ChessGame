@@ -1,4 +1,4 @@
-package Model;
+package Model.Mouvements;
 
 public enum Direction {
     HAUT(-1, 0),

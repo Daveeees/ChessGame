@@ -1,4 +1,7 @@
-package Model;
+package Model.Mouvements;
+
+import Model.Case;
+import Model.Joueur;
 
 import java.util.ArrayList;
 

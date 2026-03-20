@@ -1,6 +1,6 @@
 package Model;
 
-import java.util.ArrayList;
+import Model.Mouvements.Pas;
 
 public class Roi extends Piece {
 

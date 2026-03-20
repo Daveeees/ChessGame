@@ -1,6 +1,7 @@
 package Model;
 
-import java.util.ArrayList;
+import Model.Mouvements.Diag;
+import Model.Mouvements.HV;
 
 public class Reine extends Piece {
 

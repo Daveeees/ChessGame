@@ -1,6 +1,6 @@
 package Model;
 
-import java.util.ArrayList;
+import Model.Mouvements.Diag;
 
 public class Fou extends Piece{
 
