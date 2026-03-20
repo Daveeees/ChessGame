@@ -1,8 +1,6 @@
 package VueController;
 
-import Model.Case;
-import Model.Jeu;
-import Model.Coup;
+import Model.*;
 import Model.Point;
 
 import javax.swing.*;
@@ -31,6 +29,39 @@ public class Board extends JFrame implements Observer {
         setVisible(true);
     }
 
+    public String getCheminImage(Case caseCourante, int ligne){
+        String cheminImage = "chessPieces/";
+
+        if (caseCourante.getPiece().getJoueur().getCouleur().equals("Noir")){
+            cheminImage += "PiecesNoires/";
+        }
+        else if (caseCourante.getPiece().getJoueur().getCouleur().equals("Blanc")){
+            cheminImage += "PiecesBlanches/";
+        }
+
+        if(caseCourante.getPiece() instanceof Pion){
+            cheminImage += "P.png";
+        }
+        else if(caseCourante.getPiece() instanceof Fou){
+            cheminImage += "B.png";
+        }
+        else if(caseCourante.getPiece() instanceof Tour){
+            cheminImage += "R.png";
+        }
+        else if(caseCourante.getPiece() instanceof Roi){
+            cheminImage += "K.png";
+        }
+        else if(caseCourante.getPiece() instanceof Reine){
+            cheminImage += "Q.png";
+        }
+        else if(caseCourante.getPiece() instanceof Cavalier){
+            cheminImage += "N.png";
+        }
+
+        return cheminImage;
+
+    }
+
     public void initBoard() {
 
         //Jpanel of  the chess board
@@ -51,9 +82,9 @@ public class Board extends JFrame implements Observer {
                 // création d'un label qui contiendra la pièce pour pour le panel
                 JLabel pieceCase = new JLabel();
                 if(jeu.getTypeCase(i,j) != null){
-                    ImageIcon icon = new ImageIcon(jeu.getTypeCase(i,j).getImage());
+                    String cheminImage = getCheminImage(jeu.getBoard()[i][j], i);
+                    ImageIcon icon = new ImageIcon(cheminImage);
                     pieceCase.setIcon(icon);
-                    //System.out.println(jeu.getTypeCase(i,j).getImage());
                 }
 
                 Point p = new Point(i,j);
@@ -111,7 +142,8 @@ public class Board extends JFrame implements Observer {
                 tab[i][j].removeAll();
                 JLabel pieceCase = new JLabel();
                 if(jeu.getTypeCase(i,j) != null){
-                    ImageIcon icon = new ImageIcon(jeu.getTypeCase(i,j).getImage());
+                    String cheminImage = getCheminImage(jeu.getBoard()[i][j], i);
+                    ImageIcon icon = new ImageIcon(cheminImage);
                     pieceCase.setIcon(icon);
                     //System.out.println(jeu.getTypeCase(i,j).getImage());
                 }

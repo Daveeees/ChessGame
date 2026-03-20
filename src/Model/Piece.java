@@ -7,20 +7,14 @@ import java.util.ArrayList;
 public abstract class Piece {
     protected int ligne;
     protected int colonne;
-    protected String image;
     protected Joueur joueur;
     protected DCA dca;
 
-    public Piece(int ligne,int colonne, String image, Joueur joueur, DCA dca) {
+    public Piece(int ligne,int colonne, Joueur joueur, DCA dca) {
         this.ligne = ligne;
         this.colonne = colonne;
-        this.image = image;
         this.joueur = joueur;
         this.dca = dca;
-    }
-
-    public String getImage(){
-        return image;
     }
 
     public Joueur getJoueur(){

@@ -4,12 +4,8 @@ import Model.Mouvements.MvtPion;
 
 public class Pion extends Piece {
 
-    public Pion(int ligne,int colonne, String image, Joueur joueur) {
-        super(ligne, colonne, image, joueur, new MvtPion(null));
-    }
-
-    public String  getImage() {
-        return image;
+    public Pion(int ligne,int colonne, Joueur joueur) {
+        super(ligne, colonne, joueur, new MvtPion(null));
     }
 
     @Override
