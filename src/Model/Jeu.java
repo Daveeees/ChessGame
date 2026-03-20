@@ -1,6 +1,7 @@
 package Model;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -108,7 +109,7 @@ public class Jeu extends Observable implements Runnable{
                         board[i][j] = new Case(i,j, cB);
                     }
                     else if(j == 2 || j == 5){
-                        Fou fB = new Fou(i,j, "chessPieces/wB.png", joueurBlanc);
+                        Fou fB = new Fou(i,j, "chessPieces/wB.png",joueurBlanc);
                         joueurBlanc.ajouterPiece(fB);
                         board[i][j] = new Case(i,j,fB);
                     }
@@ -160,6 +161,10 @@ public class Jeu extends Observable implements Runnable{
 
     public void resetNextC(){
         nextC = null;
+    }
+
+    public Case[][] getBoard(){
+        return board;
     }
 
     public void jouerPartie() throws InterruptedException {

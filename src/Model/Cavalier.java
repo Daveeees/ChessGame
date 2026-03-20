@@ -1,19 +1,11 @@
 package Model;
 
-import java.util.ArrayList;
+import Model.Mouvements.SautCheval;
 
 public class Cavalier extends Piece{
 
-    private int ligne;
-    private int colonne;
-    private String image;
-    private Joueur joueur;
-
     public Cavalier(int ligne,int colonne, String image, Joueur joueur) {
-        this.ligne = ligne;
-        this.colonne = colonne;
-        this.image = image;
-        this.joueur = joueur;
+        super(ligne, colonne, image, joueur, new SautCheval(null));
     }
 
     @Override
@@ -23,11 +15,5 @@ public class Cavalier extends Piece{
 
     public String getImage() {
         return image;
-    }
-
-    @Override
-    public ArrayList<Case> getCasesAccessibles(int ligne, int colonne) {
-        ArrayList<Case> casesAccessibles = new ArrayList<>();
-        return casesAccessibles;
     }
 }

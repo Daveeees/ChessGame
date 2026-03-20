@@ -1,31 +1,19 @@
 package Model;
 
-import java.util.ArrayList;
+import Model.Mouvements.Diag;
+import Model.Mouvements.HV;
 
 public class Reine extends Piece {
-    private int ligne;
-    private int colonne;
-    private String image;
-    private Joueur joueur;
 
     public Reine(int ligne,int colonne, String image, Joueur joueur) {
-        this.ligne = ligne;
-        this.colonne = colonne;
-        this.image = image;
-        this.joueur = joueur;
+        super(ligne, colonne, image, joueur, new HV(new Diag(null)));
     }
 
     @Override
     public Joueur getJoueur() {
         return joueur;
     }
-
     public String getImage(){
         return this.image;
-    }
-    @Override
-    public ArrayList<Case> getCasesAccessibles(int ligne, int colonne) {
-        ArrayList<Case> casesAccessibles = new ArrayList<>();
-        return casesAccessibles;
     }
 }

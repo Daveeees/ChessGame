@@ -1,33 +1,18 @@
 package Model;
 
-import java.util.ArrayList;
+import Model.Mouvements.Pas;
 
 public class Roi extends Piece {
 
-    private int ligne;
-    private int colonne;
-    private String image;
-    private Joueur joueur;
-
     public Roi(int ligne,int colonne,  String image, Joueur joueur) {
-        this.ligne = ligne;
-        this.colonne = colonne;
-        this.image = image;
-        this.joueur = joueur;
+        super(ligne, colonne, image, joueur, new Pas(null));
     }
 
     @Override
     public Joueur getJoueur(){
         return joueur;
     }
-
     public String  getImage() {
         return image;
-    }
-
-    @Override
-    public ArrayList<Case> getCasesAccessibles(int ligne, int colonne) {
-        ArrayList<Case> casesAccessibles = new ArrayList<>();
-        return casesAccessibles;
     }
 }
