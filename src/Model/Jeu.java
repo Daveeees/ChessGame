@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 public class Jeu extends Observable implements Runnable{
@@ -14,6 +15,18 @@ public class Jeu extends Observable implements Runnable{
     private Boolean partieTerminee = false;
     private Coup nextC;
     private Point pointSelectionne = null;
+    private ArrayList<Case> casesPossibles = null;
+
+    public void setCasesPossibles() {
+        Piece pieceSelectionnee = board[pointSelectionne.getX()][pointSelectionne.getY()].getPiece();
+        casesPossibles = pieceSelectionnee.getCasesAccessibles(pointSelectionne.getX(),pointSelectionne.getY(),getBoard());
+        casesPossibles.removeIf(c -> !joueurEnCours.coupValide(new Coup(pointSelectionne, new Point(c.getLigne(), c.getColonne())), this.getBoard()));
+
+    }
+
+    public ArrayList<Case> getCasesPossibles() {
+        return casesPossibles;
+    }
 
     public boolean isPartieTerminee() {
         return partieTerminee;
@@ -36,6 +49,7 @@ public class Jeu extends Observable implements Runnable{
         if (board[p.getX()][p.getY()].getPiece() != null || pointSelectionne != null){
             if(pointSelectionne == null){
                 pointSelectionne = p;
+                setCasesPossibles();
             }
             else{
                 Coup c = new Coup(pointSelectionne,p);

@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -105,27 +106,24 @@ public class Board extends JFrame implements Observer {
         this.add(pi);
     }
 
-    public void refreshRouge(){
-        int colSelect = jeu.getPointSelectionne().getY();
-        int ligneSelect = jeu.getPointSelectionne().getX();
-        // System.out.print(colSelect);
-        // System.out.print(ligneSelect);
+    public void selectionPiece(){
+        ArrayList<Case> casesPossibles = jeu.getCasesPossibles();
 
-        for(int i = 0; i < 8; i++){
-            for(int j = 0; j < 8; j++){
-                if (j == colSelect && i == ligneSelect){
-                    if (tab[i][j].getBackground() != Color.RED) {
-                        tab[i][j].setBackground(Color.RED);
-                    }
-                    else {
-                        if ((i + j) % 2 == 0) {
-                            tab[i][j].setBackground(Color.WHITE);
-                        } else {
-                            tab[i][j].setBackground(Color.DARK_GRAY);
-                        }
-                    }
-                }
+        int colonneSelect = jeu.getPointSelectionne().getY();
+        int ligneSelect = jeu.getPointSelectionne().getX();
+        if (tab[ligneSelect][colonneSelect].getBackground() != Color.RED) {
+            tab[ligneSelect][colonneSelect].setBackground(Color.RED);
+        }
+        else {
+            if ((ligneSelect + colonneSelect) % 2 == 0) {
+                tab[ligneSelect][colonneSelect].setBackground(Color.WHITE);
+            } else {
+                tab[ligneSelect][colonneSelect].setBackground(Color.DARK_GRAY);
             }
+        }
+
+        for (Case c : casesPossibles) {
+            tab[c.getLigne()][c.getColonne()].setBackground(Color.RED);
         }
     }
 
@@ -158,7 +156,7 @@ public class Board extends JFrame implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if(jeu.getPointSelectionne() != null){
-            refreshRouge();
+            selectionPiece();
         }
         else{
             refreshBoard();
