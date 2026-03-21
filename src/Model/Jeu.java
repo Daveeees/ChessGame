@@ -1,9 +1,7 @@
 package Model;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
 
 public class Jeu extends Observable implements Runnable{
 
@@ -17,8 +15,22 @@ public class Jeu extends Observable implements Runnable{
     private Boolean partieTerminee = false;
     private Coup nextC;
     private Point pointSelectionne = null;
+    private ArrayList<Case> casesPossibles = null;
 
+    public void setCasesPossibles() {
+        Piece pieceSelectionnee = board[pointSelectionne.getX()][pointSelectionne.getY()].getPiece();
+        casesPossibles = pieceSelectionnee.getCasesAccessibles(pointSelectionne.getX(),pointSelectionne.getY(),getBoard());
+        casesPossibles.removeIf(c -> !joueurEnCours.coupValide(new Coup(pointSelectionne, new Point(c.getLigne(), c.getColonne())), this.getBoard()));
 
+    }
+
+    public ArrayList<Case> getCasesPossibles() {
+        return casesPossibles;
+    }
+
+    public boolean isPartieTerminee() {
+        return partieTerminee;
+    }
     public Joueur joueurSuivant(){
         if(joueurEnCours.getCouleur().equals("Blanc")){
             joueurEnCours = joueurNoir;
@@ -37,6 +49,7 @@ public class Jeu extends Observable implements Runnable{
         if (board[p.getX()][p.getY()].getPiece() != null || pointSelectionne != null){
             if(pointSelectionne == null){
                 pointSelectionne = p;
+                setCasesPossibles();
             }
             else{
                 Coup c = new Coup(pointSelectionne,p);
@@ -164,15 +177,20 @@ public class Jeu extends Observable implements Runnable{
     }
 
     public Case[][] getBoard(){
-        return board;
+        return this.board;
     }
 
     public void jouerPartie() throws InterruptedException {
 
         while(!partieTerminee){
-            Coup c = joueurEnCours.getCoup();
-            appliquerCoup(c);
-            joueurSuivant();
+            if(!joueurEnCours.estEnEchecEtMat(board)) {
+                Coup c = joueurEnCours.getCoup();
+                appliquerCoup(c);
+                joueurSuivant();
+            }
+            else{
+                partieTerminee = true;
+            }
 
         }
     }
