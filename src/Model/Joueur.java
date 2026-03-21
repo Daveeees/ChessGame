@@ -28,12 +28,56 @@ public class Joueur {
         couleur = col;
     }
 
+    public boolean estEnEchec(Case[][] board) {
+        int roiL = -1, roiC = -1;
+        for (int l = 0; l < 8; l++) {
+            for (int c = 0; c < 8; c++) {
+                Piece p = board[l][c].getPiece();
+                if (p instanceof Roi &&
+                        p.getJoueur().getCouleur().equals(getCouleur())) {
+                    roiL = l;
+                    roiC = c;
+                }
+            }
+        }
+
+        Case caseRoi = board[roiL][roiC];
+        for (int l = 0; l < 8; l++) {
+            for (int c = 0; c < 8; c++) {
+                Piece p = board[l][c].getPiece();
+                if (p != null && !p.getJoueur().getCouleur().equals(getCouleur())) {
+                    if (p.getCasesAccessibles(l, c, board).contains(caseRoi))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Case[][] simulerCoup(Coup coup, Case[][] board) {
+        Case[][] copie = new Case[8][8];
+        for (int l = 0; l < 8; l++) {
+            for (int c = 0; c < 8; c++) {
+                copie[l][c] = new Case(l, c, board[l][c].getPiece());
+            }
+        }
+        int dx = coup.getDepart().getX();
+        int dy = coup.getDepart().getY();
+        int ax = coup.getArrivee().getX();
+        int ay = coup.getArrivee().getY();
+        Piece pieceABouger = copie[dx][dy].getPiece();
+        copie[dx][dy].setPiece(null);
+        copie[ax][ay].setPiece(pieceABouger);
+        return copie;
+
+    }
+
     public Boolean coupValide(Coup c, Case[][] board){
         Case caseDepart = board[c.getDepart().getX()][c.getDepart().getY()];
         Case caseArrivee = board[c.getArrivee().getX()][c.getArrivee().getY()];
         ArrayList<Case> casesPossibles = null;
         casesPossibles = caseDepart.getPiece().getCasesAccessibles(c.getDepart().getX(), c.getDepart().getY(), board);
-        return jeu.getTypeCase(c.getDepart().getX(),c.getDepart().getY()).getJoueur().equals(this) && casesPossibles != null && casesPossibles.contains(caseArrivee);
+        return jeu.getTypeCase(c.getDepart().getX(),c.getDepart().getY()).getJoueur().equals(this) && casesPossibles != null && casesPossibles.contains(caseArrivee) && !estEnEchec(simulerCoup(c, board));
     }
 
     public Coup getCoup() throws InterruptedException {

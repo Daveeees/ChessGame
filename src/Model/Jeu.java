@@ -1,9 +1,6 @@
 package Model;
 
-import javax.swing.*;
-import java.util.ArrayList;
 import java.util.Observable;
-import java.util.Observer;
 
 public class Jeu extends Observable implements Runnable{
 
@@ -164,7 +161,7 @@ public class Jeu extends Observable implements Runnable{
     }
 
     public Case[][] getBoard(){
-        return board;
+        return this.board;
     }
 
     public void jouerPartie() throws InterruptedException {
