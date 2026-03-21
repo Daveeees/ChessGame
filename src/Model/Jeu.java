@@ -15,7 +15,9 @@ public class Jeu extends Observable implements Runnable{
     private Coup nextC;
     private Point pointSelectionne = null;
 
-
+    public boolean isPartieTerminee() {
+        return partieTerminee;
+    }
     public Joueur joueurSuivant(){
         if(joueurEnCours.getCouleur().equals("Blanc")){
             joueurEnCours = joueurNoir;
@@ -167,9 +169,14 @@ public class Jeu extends Observable implements Runnable{
     public void jouerPartie() throws InterruptedException {
 
         while(!partieTerminee){
-            Coup c = joueurEnCours.getCoup();
-            appliquerCoup(c);
-            joueurSuivant();
+            if(!joueurEnCours.estEnEchecEtMat(board)) {
+                Coup c = joueurEnCours.getCoup();
+                appliquerCoup(c);
+                joueurSuivant();
+            }
+            else{
+                partieTerminee = true;
+            }
 
         }
     }

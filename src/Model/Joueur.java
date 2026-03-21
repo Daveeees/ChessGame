@@ -72,6 +72,27 @@ public class Joueur {
 
     }
 
+    public boolean estEnEchecEtMat(Case[][] board) {
+        if (!estEnEchec(board)){
+            return false;
+        }
+        for (int l = 0; l < 8; l++) {
+            for (int c = 0; c < 8; c++) {
+                Piece p = board[l][c].getPiece();
+                if (p != null && p.getJoueur().getCouleur().equals(getCouleur())) {
+
+                    for (Case caseTest : p.getCasesAccessibles(l, c, board)) {
+                        Coup coup = new Coup(new Point(l, c), new Point(caseTest.getLigne(), caseTest.getColonne()));
+                        if (!estEnEchec(simulerCoup(coup, board))) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     public Boolean coupValide(Coup c, Case[][] board){
         Case caseDepart = board[c.getDepart().getX()][c.getDepart().getY()];
         Case caseArrivee = board[c.getArrivee().getX()][c.getArrivee().getY()];

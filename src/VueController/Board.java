@@ -162,6 +162,10 @@ public class Board extends JFrame implements Observer {
         }
         else{
             refreshBoard();
+            if(jeu.isPartieTerminee()){
+                JOptionPane.showMessageDialog(this,
+                        "Échec et mat !","Fin de partie",JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 }
