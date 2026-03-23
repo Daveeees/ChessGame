@@ -194,7 +194,7 @@ public class Jeu extends Observable implements Runnable{
             Piece pieceABouger = board[dx][dy].getPiece();
             boolean estPion = pieceABouger instanceof Pion;
             boolean estDiagonal = (dy != ay);
-            if (estPion && estDiagonal && board[ax][ay].getPiece() != null) {
+            if (estPion && estDiagonal && board[ax][ay].getPiece() == null) {
                 Piece pionCapture = board[dx][ay].getPiece();
                 if (pionCapture != null) {
                     pionCapture.getJoueur().retirerPiece(pionCapture);
