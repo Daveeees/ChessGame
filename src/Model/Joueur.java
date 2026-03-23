@@ -93,11 +93,21 @@ public class Joueur {
         return true;
     }
 
+    public Boolean estEnPat(){
+        for(Piece p : pieces){
+            for(Case c : p.getCasesAccessibles(p.ligne,p.colonne, jeu.getBoard())){
+              if(coupValide(new Coup(new Point(p.ligne,p.colonne), new Point(c.getLigne(),c.getColonne())),jeu.getBoard())){
+                  return false;
+              }
+            }
+        }
+        return !estEnEchec(jeu.getBoard());
+    }
+
     public Boolean coupValide(Coup c, Case[][] board){
         Case caseDepart = board[c.getDepart().getX()][c.getDepart().getY()];
         Case caseArrivee = board[c.getArrivee().getX()][c.getArrivee().getY()];
-        ArrayList<Case> casesPossibles = null;
-        casesPossibles = caseDepart.getPiece().getCasesAccessibles(c.getDepart().getX(), c.getDepart().getY(), board);
+        ArrayList<Case> casesPossibles = caseDepart.getPiece().getCasesAccessibles(c.getDepart().getX(), c.getDepart().getY(), board);
         return jeu.getTypeCase(c.getDepart().getX(),c.getDepart().getY()).getJoueur().equals(this) && casesPossibles != null && casesPossibles.contains(caseArrivee) && !estEnEchec(simulerCoup(c, board));
     }
 

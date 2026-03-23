@@ -160,10 +160,15 @@ public class Board extends JFrame implements Observer {
         }
         else{
             refreshBoard();
-            if(jeu.isPartieTerminee()){
+            if(jeu.isPartieGagnee()){
                 JOptionPane.showMessageDialog(this,
                         "Échec et mat !","Fin de partie",JOptionPane.INFORMATION_MESSAGE);
             }
+            else if(jeu.isPat()){
+                JOptionPane.showMessageDialog(this,
+                        "Pat !","Fin de partie",JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }
     }
 }
