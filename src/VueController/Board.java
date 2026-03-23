@@ -155,7 +155,6 @@ public class Board extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        // Force l'exécution sur le thread de l'interface graphique
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
