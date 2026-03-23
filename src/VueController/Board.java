@@ -155,21 +155,26 @@ public class Board extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if(jeu.getPointSelectionne() != null){
-            selectionPiece();
-        }
-        else{
-            refreshBoard();
-            if(jeu.isPartieGagnee()){
-                JOptionPane.showMessageDialog(this,
-                        "Échec et mat !","Fin de partie",JOptionPane.INFORMATION_MESSAGE);
+        // Force l'exécution sur le thread de l'interface graphique
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if(jeu.getPointSelectionne() != null){
+                    selectionPiece();
+                }
+                else{
+                    refreshBoard();
+                    if(jeu.isPartieGagnee()){
+                        JOptionPane.showMessageDialog(Board.this,
+                                "Échec et mat !","Fin de partie",JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else if(jeu.isPat()){
+                        JOptionPane.showMessageDialog(Board.this,
+                                "Pat !","Fin de partie",JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
             }
-            else if(jeu.isPat()){
-                JOptionPane.showMessageDialog(this,
-                        "Pat !","Fin de partie",JOptionPane.INFORMATION_MESSAGE);
-            }
-
-        }
+        });
     }
 }
 
