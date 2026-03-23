@@ -12,10 +12,11 @@ public class Jeu extends Observable implements Runnable{
     private Joueur joueurBlanc = new Joueur("Blanc",this);
     private Joueur joueurNoir = new Joueur("Noir",this);
     private Joueur joueurEnCours = joueurBlanc;
-    private Boolean partieTerminee = false;
+    private Boolean partieGagnee = false;
     private Coup nextC;
     private Point pointSelectionne = null;
     private ArrayList<Case> casesPossibles = null;
+    private Boolean pat = false;
 
     public void setCasesPossibles() {
         Piece pieceSelectionnee = board[pointSelectionne.getX()][pointSelectionne.getY()].getPiece();
@@ -28,8 +29,12 @@ public class Jeu extends Observable implements Runnable{
         return casesPossibles;
     }
 
-    public boolean isPartieTerminee() {
-        return partieTerminee;
+    public boolean isPartieGagnee() {
+        return partieGagnee;
+    }
+
+    public boolean isPat(){
+        return pat;
     }
     public Joueur joueurSuivant(){
         if(joueurEnCours.getCouleur().equals("Blanc")){
@@ -46,6 +51,15 @@ public class Jeu extends Observable implements Runnable{
             }
         }
         return joueurEnCours;
+    }
+
+    public Joueur getJoueurSuivant(){
+        if(joueurEnCours.getCouleur().equals("Blanc")){
+            return joueurNoir;
+        }
+        else{
+            return joueurBlanc;
+        }
     }
 
     // Fonction servant à créer un coup
@@ -203,16 +217,16 @@ public class Jeu extends Observable implements Runnable{
 
     public void jouerPartie() throws InterruptedException {
 
-        while(!partieTerminee){
-            if(!joueurEnCours.estEnEchecEtMat(board)) {
-                Coup c = joueurEnCours.getCoup();
-                appliquerCoup(c);
-                joueurSuivant();
+        while(!partieGagnee && !pat){
+            Coup c = joueurEnCours.getCoup();
+            appliquerCoup(c);
+            joueurSuivant();
+            if(joueurEnCours.estEnEchecEtMat(board)){
+                partieGagnee = true;
             }
-            else{
-                partieTerminee = true;
+            else if(joueurEnCours.estEnPat()){
+                pat = true;
             }
-
         }
     }
     public void run(){
