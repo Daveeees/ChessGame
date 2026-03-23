@@ -6,6 +6,8 @@ public class Joueur {
     private String couleur;
     private final Jeu jeu;
     private ArrayList<Piece> pieces = new ArrayList<Piece>();
+    private Coup dernierCoup;
+    private Coup dernierCoupAdverse;
 
     public Joueur(String couleur, Jeu jeu) {
         this.couleur = couleur;
@@ -26,6 +28,28 @@ public class Joueur {
 
     public void setCouleur(String col){
         couleur = col;
+    }
+
+    public void setDernierCoup(Coup c){
+        dernierCoup = c;
+    }
+
+    public void setDernierCoupAdverse(Coup c){
+        dernierCoupAdverse = c;
+    }
+
+    public Coup getDernierCoupAdverse() {
+        if (dernierCoupAdverse != null) {
+            return dernierCoupAdverse;
+        }
+        return null;
+    }
+
+    public Coup getDernierCoup() {
+        if (dernierCoup != null) {
+            return dernierCoup;
+        }
+        return null;
     }
 
     public boolean estEnEchec(Case[][] board) {

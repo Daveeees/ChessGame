@@ -2,6 +2,8 @@ package Model.Mouvements;
 
 import Model.Case;
 import Model.Joueur;
+import Model.Piece;
+import Model.Pion;
 
 import java.util.ArrayList;
 
@@ -29,7 +31,26 @@ public class MvtPion extends DCA {
 
         if(joueur.getCouleur().equals("Blanc")) {
 
+            if (joueur.getDernierCoupAdverse() != null)
+            {
+                int src_ligne = joueur.getDernierCoupAdverse().getDepart().getX();
+                int src_col = joueur.getDernierCoupAdverse().getDepart().getY();
+                int dest_ligne = joueur.getDernierCoupAdverse().getArrivee().getX();
+                int dest_col = joueur.getDernierCoupAdverse().getArrivee().getY();
 
+                Piece dernierePiece = board[dest_ligne][dest_col].getPiece();
+
+                boolean etaitPion = dernierePiece instanceof Pion;
+                boolean estAdverse = dernierePiece != null && dernierePiece.getJoueur().getCouleur().equals("Noir");
+                boolean avanceDeDeux = Math.abs(dest_ligne - src_ligne) == 2;
+                boolean memeLigne = dest_ligne == ligne;
+                boolean colonneAdjacente = Math.abs(dest_col - colonne) == 1;
+
+                if (etaitPion && estAdverse && avanceDeDeux && memeLigne && colonneAdjacente)
+                {
+                    cases.add(board[src_ligne + 1][src_col]);
+                }
+            }
 
             int l = ligne + Direction.HAUT.dx;
             int c = colonne + Direction.HAUT.dy;
@@ -53,6 +74,27 @@ public class MvtPion extends DCA {
             }
         }
         else if(joueur.getCouleur().equals("Noir")) {
+
+            if (joueur.getDernierCoupAdverse() != null)
+            {
+                int src_ligne = joueur.getDernierCoupAdverse().getDepart().getX();
+                int src_col = joueur.getDernierCoupAdverse().getDepart().getY();
+                int dest_ligne = joueur.getDernierCoupAdverse().getArrivee().getX();
+                int dest_col = joueur.getDernierCoupAdverse().getArrivee().getY();
+
+                Piece dernierePiece = board[dest_ligne][dest_col].getPiece();
+
+                boolean etaitPion = dernierePiece instanceof Pion;
+                boolean estAdverse = dernierePiece != null && dernierePiece.getJoueur().getCouleur().equals("Blanc");
+                boolean avanceDeDeux = Math.abs(dest_ligne - src_ligne) == 2;
+                boolean memeLigne = dest_ligne == ligne;
+                boolean colonneAdjacente = Math.abs(dest_col - colonne) == 1;
+
+                if (etaitPion && estAdverse && avanceDeDeux && memeLigne && colonneAdjacente)
+                {
+                    cases.add(board[src_ligne - 1][src_col]);
+                }
+            }
             int l = ligne + Direction.BAS.dx;
             int c = colonne + Direction.BAS.dy;
 
