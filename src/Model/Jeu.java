@@ -187,17 +187,23 @@ public class Jeu extends Observable implements Runnable{
         int ax = c.getArrivee().getX();
         int ay = c.getArrivee().getY();
         if(board[dx][dy].getPiece() != null){
+            if(board[ax][ay].getPiece() != null){
+                Joueur joueurAdverse = getJoueurSuivant();
+                joueurAdverse.retirerPiece(board[ax][ay].getPiece());
+            }
             Piece pieceABouger = board[dx][dy].getPiece();
             boolean estPion = pieceABouger instanceof Pion;
             boolean estDiagonal = (dy != ay);
-            boolean caseArriveeVide = (board[ax][ay].getPiece() == null);
-            if (estPion && estDiagonal && caseArriveeVide) {
+            if (estPion && estDiagonal && board[ax][ay].getPiece() != null) {
                 Piece pionCapture = board[dx][ay].getPiece();
                 if (pionCapture != null) {
                     pionCapture.getJoueur().retirerPiece(pionCapture);
                     board[dx][ay].setPiece(null);
                 }
             }
+
+            pieceABouger.ligne = c.getArrivee().getX();
+            pieceABouger.colonne = c.getArrivee().getY();
 
             board[dx][dy].setPiece(null);
             board[ax][ay].setPiece(pieceABouger);
