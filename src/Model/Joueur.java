@@ -142,7 +142,7 @@ public class Joueur {
             }
 
             Coup c = jeu.getNextCoup();
-            jeu.resetNextC(); // On vide le coup pour le tour suivant
+            jeu.resetNextC();
             return c;
         }
     }

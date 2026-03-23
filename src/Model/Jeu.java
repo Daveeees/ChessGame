@@ -5,9 +5,6 @@ import java.util.Observable;
 
 public class Jeu extends Observable implements Runnable{
 
-    private int ligneChoise;
-    private int colonneChoisie;
-    private Piece piece;
     private Case[][] board = new Case[8][8];
     private Joueur joueurBlanc = new Joueur("Blanc",this);
     private Joueur joueurNoir = new Joueur("Noir",this);
@@ -62,10 +59,6 @@ public class Jeu extends Observable implements Runnable{
         }
     }
 
-    // Fonction servant à créer un coup
-    // Si pas de case déjà enregistree: enregistrer cette case (elle servira de point de départ)
-    // Si une case déjà enregistrée: créer un coup avec la case choisie en tant que point d'arrivee
-    // et la case déjà présente en tant que point de départ
     public void gererPointSelectionne(Point p){
         if (board[p.getX()][p.getY()].getPiece() != null || pointSelectionne != null){
             if(pointSelectionne == null){
