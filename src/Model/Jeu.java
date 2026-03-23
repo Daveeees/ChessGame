@@ -34,9 +34,16 @@ public class Jeu extends Observable implements Runnable{
     public Joueur joueurSuivant(){
         if(joueurEnCours.getCouleur().equals("Blanc")){
             joueurEnCours = joueurNoir;
+            if(joueurBlanc.getDernierCoup() != null){
+                joueurEnCours.setDernierCoupAdverse(joueurBlanc.getDernierCoup());
+            }
+
         }
         else{
             joueurEnCours = joueurBlanc;
+            if(joueurNoir.getDernierCoup() != null){
+                joueurEnCours.setDernierCoupAdverse(joueurNoir.getDernierCoup());
+            }
         }
         return joueurEnCours;
     }
@@ -161,13 +168,27 @@ public class Jeu extends Observable implements Runnable{
         }
     }
     public void appliquerCoup(Coup c){
-        Case caseDepart = board[c.getDepart().getX()][c.getDepart().getY()];
-        Case caseArrivee = board[c.getArrivee().getX()][c.getArrivee().getY()];
-        if(caseDepart.getPiece() != null){
-            Piece pieceABouger = caseDepart.getPiece();
-            caseDepart.setPiece(null);
-            caseArrivee.setPiece(pieceABouger);
+        int dx = c.getDepart().getX();
+        int dy = c.getDepart().getY();
+        int ax = c.getArrivee().getX();
+        int ay = c.getArrivee().getY();
+        if(board[dx][dy].getPiece() != null){
+            Piece pieceABouger = board[dx][dy].getPiece();
+            boolean estPion = pieceABouger instanceof Pion;
+            boolean estDiagonal = (dy != ay);
+            boolean caseArriveeVide = (board[ax][ay].getPiece() == null);
+            if (estPion && estDiagonal && caseArriveeVide) {
+                Piece pionCapture = board[dx][ay].getPiece();
+                if (pionCapture != null) {
+                    pionCapture.getJoueur().retirerPiece(pionCapture);
+                    board[dx][ay].setPiece(null);
+                }
+            }
+
+            board[dx][dy].setPiece(null);
+            board[ax][ay].setPiece(pieceABouger);
         }
+        joueurEnCours.setDernierCoup(c);
         setChanged();
         notifyObservers();
     }
